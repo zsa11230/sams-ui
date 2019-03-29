@@ -3,7 +3,7 @@
     <basic-container>
       <div class="banner-text">
         <span>
-          <h1>欢迎来到，学生综合管理系统！</h1>
+          <h1>欢迎来到，学生综合管理系统</h1>
         </span>
         <br />
         <span>
