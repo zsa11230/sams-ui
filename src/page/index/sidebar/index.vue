@@ -1,19 +1,10 @@
 <template>
   <div class="avue-sidebar">
     <logo></logo>
-    <el-scrollbar style="height:100%">
-      <div v-if="validatenull(menu)"
-           class="avue-sidebar--tip">没有发现菜单</div>
-      <el-menu unique-opened
-               :default-active="nowTagValue"
-               mode="vertical"
-               :show-timeout="200"
-               :collapse="keyCollapse">
-        <sidebar-item :menu="menu"
-                      :screen="screen"
-                      first
-                      :props="website.menu.props"
-                      :collapse="keyCollapse"></sidebar-item>
+    <el-scrollbar style="height:100%;" wrap-class="scroll-wrapper">
+      <div v-if="validatenull(menu)" class="avue-sidebar--tip">没有发现菜单</div>
+      <el-menu unique-opened :default-active="nowTagValue" mode="vertical" :show-timeout="200" :collapse="keyCollapse">
+        <sidebar-item :menu="menu" :screen="screen" first :props="website.menu.props" :collapse="keyCollapse"></sidebar-item>
       </el-menu>
     </el-scrollbar>
   </div>
@@ -26,10 +17,10 @@ import sidebarItem from "./sidebarItem";
 export default {
   name: "sidebar",
   components: { sidebarItem, logo },
-  data() {
+  data () {
     return {};
   },
-  created() {
+  created () {
     this.$store.dispatch("GetMenu").then(data => {
       if (data.length === 0) return;
       this.$router.$avueRouter.formatRoutes(data, true);
@@ -37,14 +28,17 @@ export default {
   },
   computed: {
     ...mapGetters(["website", "menu", "tag", "keyCollapse", "screen"]),
-    nowTagValue: function() {
+    nowTagValue: function () {
       return this.$router.$avueRouter.getValue(this.$route);
     }
   },
-  mounted() {},
+  mounted () { },
   methods: {}
 };
 </script>
-<style lang="scss" scoped>
+<style scoped>
+.avue-sidebar >>> .scroll-wrapper {
+  overflow-x: hidden;
+}
 </style>
 

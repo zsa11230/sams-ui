@@ -95,7 +95,7 @@
     var storageOwner,
       storageContainer
     // Since #userData storage applies only to specific paths, we need to
-    // somehow link our data to a specific path.  We choose /favicon.ico
+    // somehow link our data to a specific path.  We choose /logo.png
     // as a pretty safe option, since all browsers already make a request to
     // this URL anyway and being a 404 will not hurt us here.  We wrap an
     // iframe pointing to the favicon in an ActiveXObject(htmlfile) object
@@ -107,7 +107,7 @@
     try {
       storageContainer = new ActiveXObject('htmlfile')
       storageContainer.open()
-      storageContainer.write('<' + scriptTag + '>document.w=window</' + scriptTag + '><iframe src="/favicon.ico"></iframe>')
+      storageContainer.write('<' + scriptTag + '>document.w=window</' + scriptTag + '><iframe src="/logo.png"></iframe>')
       storageContainer.close()
       storageOwner = storageContainer.w.frames[0].document
       storage = storageOwner.createElement('div')

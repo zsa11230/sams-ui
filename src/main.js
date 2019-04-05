@@ -21,6 +21,12 @@ import Avue from '@smallwei/avue/lib/index.js'
 // 引入avue的样式文件
 import '@smallwei/avue/lib/theme-chalk/index.css'
 import basicContainer from './components/basic-container/main'
+import ETable from './components/e-table/'
+import EDialog from './components/EDialog/'
+import PageHeader from './components/Page/Header'
+import OperationContainer from './components/Operation/Container'
+import OperationSearch from './components/Operation/Search'
+import OperationWrapper from './components/Operation/Wrapper'
 
 import { validatenull } from '@/util/validate'
 
@@ -34,6 +40,12 @@ Vue.use(VueAxios, axios)
 
 // 注册全局容器
 Vue.component('basicContainer', basicContainer)
+Vue.component(ETable.name, ETable)
+Vue.component(EDialog.name, EDialog)
+Vue.component(PageHeader.name, PageHeader)
+Vue.component(OperationContainer.name, OperationContainer)
+Vue.component(OperationSearch.name, OperationSearch)
+Vue.component(OperationWrapper.name, OperationWrapper)
 
 // 加载相关url地址
 Object.keys(urls).forEach(key => {

@@ -1,4 +1,4 @@
-import {validatenull} from './validate'
+import { validatenull } from './validate'
 import request from '@/router/axios'
 
 // 表单序列化
@@ -145,7 +145,7 @@ export const fullscreenToggel = () => {
  * esc监听全屏
  */
 export const listenfullscreen = (callback) => {
-  function listen() {
+  function listen () {
     callback()
   }
   document.addEventListener("fullscreenchange", function () {
