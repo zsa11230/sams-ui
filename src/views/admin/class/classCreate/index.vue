@@ -16,6 +16,7 @@
             <operation-wrapper>
               <el-button size="small" @click="handleView(scope.row)" plain>查看</el-button>
               <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
+              <el-button size="small" @click="handleAddStudent(scope.row)">添加人员</el-button>
               <el-button size="small" @click="handleDelete(scope.row)">删除</el-button>
             </operation-wrapper>
           </template>
@@ -23,14 +24,17 @@
       </e-table>
     </basic-container>
     <dialog-form ref="DialogForm" @load-page="loadPage"></dialog-form>
+    <create-dialog ref="createDialog" @load-page="loadPage"></create-dialog>
   </div>
 </template>
 
 <script>
+import { getClassList, addStudent } from '@/api/admin/class'
 import mixins from '@/mixins/mixins'
 import { getTableData, addClass, getClass, putClass, delClass } from '@/api/admin/class'
 import { columnsMap, initMemberForm } from './options'
 import DialogForm from './DialogForm'
+import createDialog from './createDialog'
 export default {
   mixins: [mixins],
   data () {
@@ -38,19 +42,18 @@ export default {
       columnsMap,
     }
   },
-  components: { DialogForm },
+  components: { DialogForm, createDialog },
   methods: {
     loadPage (param) {
       this.loadTable(param, getTableData)
     },
     handleSelectionChange (val) {
-      this.multipleSelection = val.map(m => m.userId)
+      this.multipleSelection = val.map(m => m.serId)
     },
     handleDelete (row) {
       this._handleGlobalDeleteById(row.id, delClass)
     },
     handleAdd (row) {
-      console.log(this.$refs)
       this.$refs['DialogForm'].form = initMemberForm(row)
       this.$refs['DialogForm'].methodName = '新增'
       this.$refs['DialogForm'].formRequestFn = addClass
@@ -71,9 +74,14 @@ export default {
         this.$refs['DialogForm'].dialogShow = true
       })
     },
+    handleAddStudent (row) {
+      this.$refs['createDialog'].classId = row.id
+      this.$refs['createDialog'].loadPage()
+      this.$refs['createDialog'].dialogShow = true
+    },
+    selectProject (projectId, projectName) {
+      this.dialogState = 'create'
+    },
   },
-  created () {
-    this.loadPage()
-  }
 }
 </script>

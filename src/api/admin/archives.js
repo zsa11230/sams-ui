@@ -7,6 +7,13 @@ export function getTableData (params) {
     params: params,
   })
 }
+export function getStudentPage (params) {
+  return request({
+    url: '/admin/archives/student/page',
+    method: 'get',
+    params: params,
+  })
+}
 
 export function addArchives (obj) {
   return request({

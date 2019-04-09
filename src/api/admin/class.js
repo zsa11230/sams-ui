@@ -8,6 +8,14 @@ export function getTableData (params) {
   })
 }
 
+export function getClassPage (params) {
+  return request({
+    url: '/admin/classinfo/myClass/page',
+    method: 'get',
+    params: params,
+  })
+}
+
 export function addClass (obj) {
   return request({
     url: '/admin/classinfo/create',
@@ -16,9 +24,24 @@ export function addClass (obj) {
   })
 }
 
+export function addStudent (obj) {
+  return request({
+    url: '/admin/classrelation/create',
+    method: 'post',
+    data: obj
+  })
+}
+
 export function getClass (id) {
   return request({
     url: `/admin/classinfo/${id}`,
+    method: 'get'
+  })
+}
+
+export function getClassList () {
+  return request({
+    url: `/admin/classinfo/list`,
     method: 'get'
   })
 }

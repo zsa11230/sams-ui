@@ -1,118 +1,76 @@
 <template>
-  <div>
-    <el-card class="box-card">
-      <div slot="header" class="clearfix">
-        <span>卡片名称</span>
-        <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
-      </div>
-      <div class="text item">
-        <el-table :data="tableData" style="width: 100%">
-          <el-table-column prop="date" label="日期" width="150">
-          </el-table-column>
-          <el-table-column label="个人信息">
-            <el-table-column prop="name" label="姓名" width="120">
-            </el-table-column>
-            <el-table-column prop="province" label="民族" width="120">
-            </el-table-column>
-            <el-table-column prop="city" label="市区" width="120">
-            </el-table-column>
-            <el-table-column prop="address" label="地址" width="300">
-            </el-table-column>
-            <el-table-column prop="zip" label="邮编" width="120">
-            </el-table-column>
-          </el-table-column>
-          <el-table-column prop="name" label="姓名" width="120">
-          </el-table-column>
-          <el-table-column prop="province" label="省份" width="120">
-          </el-table-column>
-          <el-table-column prop="city" label="市区" width="120">
-          </el-table-column>
-          <el-table-column prop="address" label="地址" width="300">
-          </el-table-column>
-          <el-table-column prop="zip" label="邮编" width="120">
-          </el-table-column>
-        </el-table>
-      </div>
-    </el-card>
+  <div class="user">
+    <basic-container>
+      <operation-container>
+        <template slot="left">
+          <el-button type="danger" size="small" @click="handleAdd()">新增班级</el-button>
+        </template>
+        <template slot="right">
+          <operation-search @search-page="searchPage">
+          </operation-search>
+        </template>
+      </operation-container>
+      <e-table :isLoadTable="isLoadTable" :pagination="pagination" :columnsMap="columnsMap" :pagedTable="pagedTable" @size-change="handleSizeChange" @current-change="handleCurrentChange" @selection-change="handleSelectionChange" is-mutiple-selection>
+        <el-table-column prop="operation" label="操作" width="280">
+          <template slot-scope="scope">
+            <operation-wrapper>
+              <el-button size="small" @click="handleView(scope.row)" plain>查看</el-button>
+              <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
+              <el-button size="small" @click="handleDelete(scope.row)">删除</el-button>
+            </operation-wrapper>
+          </template>
+        </el-table-column>
+      </e-table>
+    </basic-container>
+    <dialog-form ref="DialogForm" @load-page="loadPage"></dialog-form>
   </div>
 </template>
+
 <script>
+import mixins from '@/mixins/mixins'
+import { getTableData, addClass, getClass, putClass, delClass } from '@/api/admin/class'
+import { columnsMap, initMemberForm } from './options'
+import DialogForm from './DialogForm'
 export default {
+  mixins: [mixins],
   data () {
     return {
-      tableData: [{
-        date: '2016-05-03',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-02',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-08',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-06',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-07',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }]
+      columnsMap,
     }
-  }
+  },
+  components: { DialogForm },
+  methods: {
+    loadPage (param) {
+      this.loadTable(param, getTableData)
+    },
+    handleSelectionChange (val) {
+      this.multipleSelection = val.map(m => m.userId)
+    },
+    handleDelete (row) {
+      this._handleGlobalDeleteById(row.id, delClass)
+    },
+    handleAdd (row) {
+      console.log(this.$refs)
+      this.$refs['DialogForm'].form = initMemberForm(row)
+      this.$refs['DialogForm'].methodName = '新增'
+      this.$refs['DialogForm'].formRequestFn = addClass
+      this.$refs['DialogForm'].dialogShow = true
+    },
+    handleEdit (row) {
+      getClass(row.id).then(({ data }) => {
+        this.$refs['DialogForm'].form = data.data
+        this.$refs['DialogForm'].methodName = '修改'
+        this.$refs['DialogForm'].formRequestFn = putClass
+        this.$refs['DialogForm'].dialogShow = true
+      })
+    },
+    handleView (row) {
+      getClass(row.id).then(({ data }) => {
+        this.$refs['DialogForm'].form = data.data
+        this.$refs['DialogForm'].methodName = '查看'
+        this.$refs['DialogForm'].dialogShow = true
+      })
+    },
+  },
 }
 </script>
-<style>
-.text {
-  font-size: 14px;
-}
-
-.item {
-  margin-bottom: 18px;
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-.clearfix:after {
-  clear: both;
-}
-
-.box-card {
-  width: 480px;
-}
-</style>

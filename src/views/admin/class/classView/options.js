@@ -6,8 +6,12 @@ const columnsMap = [
     label: '所属学院',
   },
   {
-    prop: 'title',
+    prop: 'className',
     label: '班级名称',
+  },
+  {
+    prop: 'yearSystem',
+    label: '年制',
   },
   {
     prop: 'headmaster',
