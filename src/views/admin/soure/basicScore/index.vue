@@ -8,10 +8,9 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import mixins from '@/mixins/mixins'
-import { getTableData } from '@/api/admin/class'
-import { columnsMap, initMemberForm } from './options'
+import { getTableData } from '@/api/admin/score'
+import { columnsMap, initMemberForm } from '../options'
 export default {
   mixins: [mixins],
   data () {
@@ -19,18 +18,10 @@ export default {
       columnsMap,
     }
   },
-  computed: {
-    ...mapState({
-      userId: state => state.user.userInfo.userId
-    })
-  },
   methods: {
-    loadPage (param = { ...this.searchForm, id: this.userId }) {
+    loadPage (param) {
       this.loadTable(param, getTableData)
     },
   },
-  created () {
-    this.loadPage()
-  }
 }
 </script>

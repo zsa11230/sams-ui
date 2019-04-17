@@ -3,7 +3,7 @@
     <basic-container>
       <operation-container>
         <template slot="left">
-          <el-button type="danger" size="small" @click="handleAdd()">新增选修课程</el-button>
+          <el-button type="danger" size="small" @click="handleAdd()">新增班级</el-button>
         </template>
         <template slot="right">
           <operation-search @search-page="searchPage">
@@ -27,7 +27,7 @@
 
 <script>
 import mixins from '@/mixins/mixins'
-import { getTableData, addCourse, getCourse, delCourse, putCourse } from '@/api/admin/course'
+import { getTableData, addScore, getScore, delScore, putScore } from '@/api/admin/score'
 import { columnsMap, initMemberForm } from '../options'
 import DialogForm from './DialogForm'
 export default {
@@ -46,21 +46,21 @@ export default {
       this.multipleSelection = val.map(m => m.userId)
     },
     handleDelete (row) {
-      this._handleGlobalDeleteById(row.id, delCourse)
+      this._handleGlobalDeleteById(row.id, delScore)
     },
     handleAdd (row) {
+      console.log(this.$refs)
       this.$refs['DialogForm'].form = initMemberForm(row)
       this.$refs['DialogForm'].methodName = '新增'
-      this.$refs['DialogForm'].formRequestFn = addCourse
+      this.$refs['DialogForm'].formRequestFn = addScore
       this.$refs['DialogForm'].dialogShow = true
     },
     handleEdit (row) {
-      getCourse(row.id).then(({ data }) => {
+      getScore(row.id).then(({ data }) => {
         this.$refs['DialogForm'].form = data.data
         this.$refs['DialogForm'].methodName = '修改'
-        this.$refs['DialogForm'].formRequestFn = putCourse
+        this.$refs['DialogForm'].formRequestFn = putScore
         this.$refs['DialogForm'].dialogShow = true
-
       })
     },
   },

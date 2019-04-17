@@ -23,8 +23,8 @@
 
 <script>
 import mixins from '@/mixins/mixins'
-import { getSelectPage } from '@/api/admin/course'
-import { columnsMap } from '../options'
+import { getTableData, addCourse, getCourse, delCourse, putCourse } from '@/api/admin/course'
+import { columnsMap, initMemberForm } from '../options'
 export default {
   mixins: [mixins],
   data () {
@@ -34,7 +34,10 @@ export default {
   },
   methods: {
     loadPage (param) {
-      this.loadTable(param, getSelectPage)
+      this.loadTable(param, getTableData)
+    },
+    handleSelectionChange (val) {
+      this.multipleSelection = val.map(m => m.userId)
     },
   },
 }

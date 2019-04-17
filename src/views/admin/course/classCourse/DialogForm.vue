@@ -3,49 +3,70 @@
     <el-form ref="form" :model="form" label-width="80px">
       <el-row>
         <el-col :span="24">
-          <el-form-item label="班级名称">
-            <el-input v-model="form.className"></el-input>
+          <el-form-item label="课程名称">
+            <el-input v-model="form.courseName"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="班主任">
+            <el-input v-model="form.courseTeacher"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="12">
-          <el-form-item label="年制">
-            <el-select v-model="form.yearSystem" placeholder="请选择">
-              <el-option label="二年" value="二年"></el-option>
-              <el-option label="三年" value="三年"></el-option>
-              <el-option label="四年" value="四年"></el-option>
-              <el-option label="五年" value="五年"></el-option>
+          <el-form-item label="课程类型">
+            <el-select v-model="form.courseType" placeholder="请选择">
+              <el-option label="公共/选修课" value="公共/选修课"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="班主任">
-            <el-input v-model="form.headmaster"></el-input>
+          <el-form-item label="学分">
+            <el-select v-model="form.credits" placeholder="请选择">
+              <el-option label="1分" value="1分"></el-option>
+              <el-option label="2分" value="2分"></el-option>
+              <el-option label="3分" value="3分"></el-option>
+              <el-option label="4分" value="4分"></el-option>
+              <el-option label="5分" value="5分"></el-option>
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="12">
-          <el-form-item label="所属学院">
-            <el-input v-model="form.title"></el-input>
+          <el-form-item label="教学时长">
+            <el-input v-model="form.duration"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="学期">
-            <el-input v-model="form.semester"></el-input>
+          <el-form-item label="课程人数">
+            <el-input v-model="form.number"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="12">
-          <el-form-item label="所属专业">
-            <el-input v-model="form.profession"></el-input>
+          <el-form-item label="课程时间">
+            <el-select v-model="form.week" placeholder="请选择">
+              <el-option label="星期一" value="0"></el-option>
+              <el-option label="星期二" value="1"></el-option>
+              <el-option label="星期三" value="2"></el-option>
+              <el-option label="星期四" value="3"></el-option>
+              <el-option label="星期五" value="4"></el-option>
+            </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="备注">
-            <el-input v-model="form.remarks"></el-input>
+          <el-form-item label="课节">
+            <el-select v-model="form.time" placeholder="请选择">
+              <el-option label="一二节" value="0"></el-option>
+              <el-option label="三四节" value="1"></el-option>
+              <el-option label="五六节" value="2"></el-option>
+              <el-option label="七八节" value="3"></el-option>
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
@@ -58,14 +79,14 @@
 </template>
 <script>
 import { addClass, getClass } from '@/api/admin/class'
-import { initMemberForm } from './options'
+import { initMemberForm } from '../options'
 export default {
   data () {
     return {
       dialogShow: false,
       formRequestFn: () => { },
       form: initMemberForm(),
-      methodName: ''
+      methodName: '',
     }
   },
   created () {

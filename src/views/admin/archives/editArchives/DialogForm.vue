@@ -3,6 +3,16 @@
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
       <el-row>
         <el-col :span="24">
+          <el-form-item label="头像">
+            <el-upload class="avatar-uploader" action="/admin/file/upload" :headers="headers" :show-file-list="false" :on-success="handleAvatarSuccess">
+              <img id="avatar" v-if="form.headImage" :src="avatarUrl" class="avatar" />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
           <el-form-item label="真实姓名" prop="realName">
             <el-input v-model="form.realName"></el-input>
           </el-form-item>
@@ -90,6 +100,8 @@
 import { getArchives } from '@/api/admin/archives'
 import { initMemberForm } from './options'
 import { getDetails } from '@/api/admin/user'
+import { handleImg } from '@/util/util'
+import store from '@/store'
 
 var validateUsername = (rule, value, callback) => {
   getDetails(value).then(response => {
@@ -110,6 +122,10 @@ export default {
       formRequestFn: () => { },
       form: initMemberForm(),
       methodName: '',
+      avatarUrl: '',
+      headers: {
+        Authorization: 'Bearer ' + store.getters.access_token,
+      },
       statusDict: [{
         label: '有效',
         value: '0'
@@ -137,6 +153,13 @@ export default {
     this.loadPage()
   },
   methods: {
+    loadImg () {
+      handleImg(this.form.headImage, 'avatar')
+    },
+    handleAvatarSuccess (res, file) {
+      this.avatarUrl = URL.createObjectURL(file.raw)
+      this.form.headImage = res.data.bucketName + '-' + res.data.fileName
+    },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -162,3 +185,31 @@ export default {
   }
 }
 </script>
+<style>
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+
+.avatar-uploader-icon {
+  font-size: 28px !important;
+  color: #8c939d !important;
+  width: 178px !important;
+  height: 178px !important;
+  line-height: 178px !important;
+  text-align: center !important;
+}
+
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+</style>

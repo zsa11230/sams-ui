@@ -17,6 +17,7 @@
               <el-button size="small" @click="handleView(scope.row)" plain>查看</el-button>
               <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
               <el-button size="small" @click="handleAddStudent(scope.row)">添加人员</el-button>
+              <el-button size="small" @click="handleCourse(scope.row)">课表</el-button>
               <el-button size="small" @click="handleDelete(scope.row)">删除</el-button>
             </operation-wrapper>
           </template>
@@ -25,6 +26,7 @@
     </basic-container>
     <dialog-form ref="DialogForm" @load-page="loadPage"></dialog-form>
     <create-dialog ref="createDialog" @load-page="loadPage"></create-dialog>
+    <course-dialog ref="courseDialog" @load-page="loadPage"></course-dialog>
   </div>
 </template>
 
@@ -35,6 +37,7 @@ import { getTableData, addClass, getClass, putClass, delClass } from '@/api/admi
 import { columnsMap, initMemberForm } from './options'
 import DialogForm from './DialogForm'
 import createDialog from './createDialog'
+import courseDialog from './courseDialog'
 export default {
   mixins: [mixins],
   data () {
@@ -42,7 +45,7 @@ export default {
       columnsMap,
     }
   },
-  components: { DialogForm, createDialog },
+  components: { DialogForm, createDialog, courseDialog },
   methods: {
     loadPage (param) {
       this.loadTable(param, getTableData)
@@ -78,6 +81,11 @@ export default {
       this.$refs['createDialog'].classId = row.id
       this.$refs['createDialog'].loadPage()
       this.$refs['createDialog'].dialogShow = true
+    },
+    handleCourse (row) {
+      this.$refs['courseDialog'].classId = row.id
+      this.$refs['courseDialog'].loadPage()
+      this.$refs['courseDialog'].dialogShow = true
     },
     selectProject (projectId, projectName) {
       this.dialogState = 'create'

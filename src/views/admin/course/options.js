@@ -2,16 +2,24 @@
 
 const columnsMap = [
   {
-    prop: 'realName',
-    label: '真实姓名',
+    prop: 'courseName',
+    label: '课程名称',
   },
   {
-    prop: 'studentId',
-    label: '学号',
+    prop: 'courseType',
+    label: '课程类型',
   },
   {
-    prop: 'enrollment',
-    label: '入学日期',
+    prop: 'credits',
+    label: '学分',
+  },
+  {
+    prop: 'courseTeacher',
+    label: '课程老师',
+  },
+  {
+    prop: 'duration',
+    label: '教学时长',
   },
 ]
 

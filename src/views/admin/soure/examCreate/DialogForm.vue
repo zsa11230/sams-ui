@@ -1,5 +1,5 @@
 <template>
-  <e-dialog :dialog-show="dialogShow" :title="`${methodName}班级管理`" width="800px" @close="loadPage">
+  <e-dialog :dialog-show="dialogShow" :title="`${methodName}课程管理`" width="800px" @close="loadPage">
     <el-form ref="form" :model="form" label-width="80px">
       <el-row>
         <el-col :span="24">
@@ -58,7 +58,7 @@
 </template>
 <script>
 import { addClass, getClass } from '@/api/admin/class'
-import { initMemberForm } from './options'
+import { initMemberForm } from '../options'
 export default {
   data () {
     return {

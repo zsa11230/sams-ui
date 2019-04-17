@@ -4,23 +4,35 @@
       <div class="user">
         <basic-container>
           <el-form ref="form" :model="form" label-width="80px" :disabled="true">
-            <el-row :gutter="100">
-              <el-col :span="12">
+            <el-row>
+              <el-col :span="24">
+                <el-form-item label="头像">
+                  <el-upload class="avatar-uploader" action="/admin/file/upload" :headers="headers" :show-file-list="false" :on-success="handleAvatarSuccess">
+                    <img id="avatar" v-if="form.headImage" :src="avatarUrl" class="avatar" />
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                  </el-upload>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="24">
                 <el-form-item label="真实姓名">
                   <el-input v-model="form.realName"></el-input>
                 </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="24">
                 <el-form-item label="民族">
                   <el-input v-model="form.nation"></el-input>
                 </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="24">
                 <el-form-item label="学号">
                   <el-input v-model="form.studentId"></el-input>
                 </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <!-- <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-                  <img v-if="headImage" :src="headImage" class="avatar">
-                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                </el-upload> -->
               </el-col>
             </el-row>
             <el-row>
@@ -65,6 +77,8 @@
 <script>
 import { mapState } from "vuex";
 import { getStudent } from '@/api/admin/archives'
+import { handleImg } from '@/util/util'
+import store from '@/store'
 export default {
   data () {
     return {
@@ -77,7 +91,11 @@ export default {
         personalInformation: '',
         honor: '',
         sex: ''
-      }
+      },
+      avatarUrl: '',
+      headers: {
+        Authorization: 'Bearer ' + store.getters.access_token,
+      },
     }
   },
   computed: {
@@ -92,6 +110,7 @@ export default {
     load () {
       getStudent(this.userId).then((res) => {
         this.form = res.data.data
+        handleImg(this.form.headImage, 'avatar')
       })
     }
   }
@@ -117,5 +136,34 @@ export default {
 
 .box-card {
   width: auto;
+}
+</style>
+
+<style>
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+
+.avatar-uploader-icon {
+  font-size: 28px !important;
+  color: #8c939d !important;
+  width: 178px !important;
+  height: 178px !important;
+  line-height: 178px !important;
+  text-align: center !important;
+}
+
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
 }
 </style>

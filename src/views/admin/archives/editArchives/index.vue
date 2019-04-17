@@ -36,7 +36,6 @@ export default {
   data () {
     return {
       columnsMap,
-      selectList: []
     }
   },
   components: { DialogForm },
@@ -45,7 +44,6 @@ export default {
       this.loadTable(param, getTableData)
     },
     handleSelectionChange (val) {
-      this.selectList = val
       this.multipleSelection = val.map(m => m.userId)
     },
     handleDelete (row) {
@@ -65,6 +63,9 @@ export default {
         this.$refs['DialogForm'].formRequestFn = putArchives
         this.$refs['DialogForm'].dialogShow = true
         this.$refs['DialogForm'].isEdit = true
+        this.$nextTick(() => {
+          this.$refs['DialogForm'].loadImg()
+        })
       })
     },
   },
