@@ -17,7 +17,8 @@
               <el-button size="small" @click="handleView(scope.row)" plain>查看</el-button>
               <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
               <el-button size="small" @click="handleAddStudent(scope.row)">添加人员</el-button>
-              <el-button size="small" @click="handleCourse(scope.row)">课表</el-button>
+              <el-button v-if="scope.row.schedule===0" size="small" @click="handleCreateCourse(scope.row)">创建课表</el-button>
+              <el-button v-if="scope.row.schedule===1" size="small" @click="handleCourse(scope.row)">查看课表</el-button>
               <el-button size="small" @click="handleDelete(scope.row)">删除</el-button>
             </operation-wrapper>
           </template>
@@ -33,7 +34,7 @@
 <script>
 import { getClassList, addStudent } from '@/api/admin/class'
 import mixins from '@/mixins/mixins'
-import { getTableData, addClass, getClass, putClass, delClass } from '@/api/admin/class'
+import { getTableData, addClass, getClass, putClass, delClass, createCourse } from '@/api/admin/class'
 import { columnsMap, initMemberForm } from './options'
 import DialogForm from './DialogForm'
 import createDialog from './createDialog'
@@ -49,6 +50,11 @@ export default {
   methods: {
     loadPage (param) {
       this.loadTable(param, getTableData)
+    },
+    handleCreateCourse (row) {
+      createCourse(row.id).then(() => {
+        this.loadPage()
+      })
     },
     handleSelectionChange (val) {
       this.multipleSelection = val.map(m => m.serId)

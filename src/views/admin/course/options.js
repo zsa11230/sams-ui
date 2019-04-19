@@ -37,7 +37,8 @@ const initMemberForm = () => {
     birthDate: '',
     contactAddress: '',
     personalInformation: '',
-    honor: ''
+    honor: '',
+    subjectTime: '',
   }
 }
 

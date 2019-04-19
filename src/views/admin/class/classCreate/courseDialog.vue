@@ -17,12 +17,11 @@
           <div class="title-item">2</div>
           <div class="title-item">3</div>
           <div class="title-item">4</div>
-          <div class="title-item">5</div>
         </div>
       </div>
       <div class="item item-4">
         <div class="content-container">
-          <div v-for="(item,i) in courseList" :key="i" @click="handleSelect(i)">{{item}}</div>
+          <div class="item" v-for="(item,i) in courseList" :key="i" @click="handleSelect(i)">{{item || '+'}}</div>
         </div>
       </div>
     </div>
@@ -31,30 +30,32 @@
 </template>
 <script>
 import selectCourseDialog from './selectCourseDialog'
+import { getCourse } from '@/api/admin/class'
 export default {
   components: { selectCourseDialog },
   data () {
     return {
       dialogShow: false,
       classId: null,
-      courseList: ['物理', '语文', '英语', '物理', '语文', '数学', '语文', '物理', '物理', '语文', '语文', '数学', '英语', '物理', '数学', '数学', '语文', '物理', '物理', '语文', '语文', '数学', '英语', '物理', '语文'],
+      courseList: [],
       selectId: null,
     }
   },
   methods: {
     handleSelect (i) {
       this.selectId = i
+      this.$refs['selectCourseDialog'].id = this.classId
+      this.$refs['selectCourseDialog'].subjectTime = i
+      this.$refs['selectCourseDialog'].loadPage()
       this.$refs['selectCourseDialog'].dialogShow = true
     },
-    handleSelectSubmit (name) {
-      const { courseList } = this
-      courseList[this.selectId] = name
-      console.log(courseList)
-      this.$set(this, 'courseList', courseList)
-      console.log(this.courseList)
+    handleSelectSubmit (data) {
+      this.courseList = data.map(m => m.className)
     },
     loadPage () {
-
+      getCourse(this.classId).then(({ data }) => {
+        this.courseList = data.data.map(m => m.className)
+      })
     },
     resetForm () {
       this.dialogShow = false
@@ -75,19 +76,24 @@ export default {
   .time-container {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
   }
   .content-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    .item {
+      text-align: center;
+      font-size: 20px;
+      border: 1px solid #666;
+    }
   }
 }
 
 .item {
   text-align: center;
   font-size: 20px;
-  border: 1px solid #e5e4e9;
+  border: 1px solid #fff;
 }
 
 .item-1 {

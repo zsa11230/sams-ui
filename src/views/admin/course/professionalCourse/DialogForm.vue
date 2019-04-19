@@ -3,6 +3,15 @@
     <el-form ref="form" :model="form" label-width="80px">
       <el-row>
         <el-col :span="24">
+          <el-form-item label="所属班级">
+            <el-select v-model="form.classId" placeholder="请选择">
+              <el-option :label="item.className" :value="item.id" v-for="item in classList" :key="item.id"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
           <el-form-item label="课程名称">
             <el-input v-model="form.courseName"></el-input>
           </el-form-item>
@@ -19,7 +28,7 @@
         <el-col :span="12">
           <el-form-item label="课程类型">
             <el-select v-model="form.courseType" placeholder="请选择">
-              <el-option label="公共/选修课" value="公共/选修课"></el-option>
+              <el-option label="公共/必修课" value="公共/必修课"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
@@ -32,18 +41,6 @@
               <el-option label="4分" value="4分"></el-option>
               <el-option label="5分" value="5分"></el-option>
             </el-select>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="12">
-          <el-form-item label="教学时长">
-            <el-input v-model="form.duration"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="课程人数">
-            <el-input v-model="form.number"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -83,7 +80,7 @@
   </e-dialog>
 </template>
 <script>
-import { addClass, getClass } from '@/api/admin/class'
+import { addClass, getClass, getClassList } from '@/api/admin/class'
 import { initMemberForm } from '../options'
 export default {
   data () {
@@ -92,9 +89,14 @@ export default {
       formRequestFn: () => { },
       form: initMemberForm(),
       methodName: '',
+      classList: [],
     }
   },
   created () {
+    getClassList().then(({ data }) => {
+      console.log(data.data)
+      this.classList = data.data
+    })
     this.loadPage()
   },
   methods: {

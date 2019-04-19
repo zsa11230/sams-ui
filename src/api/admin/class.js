@@ -60,3 +60,30 @@ export function putClass (obj) {
     data: obj
   })
 }
+
+export function createCourse (id) {
+  return request({
+    url: `/admin/schedule/create/${id}`,
+    method: 'post',
+  })
+}
+export function getCourse (id) {
+  return request({
+    url: `/admin/schedule/${id}`,
+    method: 'get',
+  })
+}
+export function postCourseList (obj) {
+  return request({
+    url: `/admin/schedule/list`,
+    method: 'post',
+    data: obj
+  })
+}
+export function postCourseUpdate (obj) {
+  return request({
+    url: `/admin/schedule/update`,
+    method: 'post',
+    data: obj
+  })
+}
