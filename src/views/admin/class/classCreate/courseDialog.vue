@@ -45,8 +45,8 @@ export default {
     handleSelect (i) {
       this.selectId = i
       this.$refs['selectCourseDialog'].id = this.classId
-      this.$refs['selectCourseDialog'].subjectTime = i
       this.$refs['selectCourseDialog'].loadPage()
+      this.$refs['selectCourseDialog'].subjectTime = i
       this.$refs['selectCourseDialog'].dialogShow = true
     },
     handleSelectSubmit (data) {

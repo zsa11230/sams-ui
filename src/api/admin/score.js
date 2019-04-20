@@ -7,6 +7,13 @@ export function getTableData (params) {
     params: params,
   })
 }
+export function getElectiveData (params) {
+  return request({
+    url: '/admin/score/elective/page',
+    method: 'get',
+    params: params,
+  })
+}
 
 export function addScore (obj) {
   return request({
@@ -35,5 +42,21 @@ export function putScore (obj) {
     url: '/admin/score/update',
     method: 'post',
     data: obj
+  })
+}
+
+export function getElectiveScoreById (params) {
+  return request({
+    url: '/admin/score/elective/student',
+    method: 'get',
+    params: params
+  })
+}
+
+export function postStudentScore (data) {
+  return request({
+    url: '/admin/score/update',
+    method: 'post',
+    data: data
   })
 }

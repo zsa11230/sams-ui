@@ -2,7 +2,7 @@
   <e-dialog :dialog-show="dialogShow" title="课表" width="520px" @close="resetForm('form')">
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="可选课程">
-        <el-select v-model="form.id" placeholder="请选择可选课程">
+        <el-select v-model="form.classId" placeholder="请选择可选课程">
           <el-option :label="item.name" :value="item.id" :key="item.id" v-for="item in courseOption"></el-option>
         </el-select>
       </el-form-item>
@@ -23,27 +23,29 @@ export default {
       courseOption: [],
       form: {
         id: '',
-        classId: ''
+        classId: '',
+        subjectTime: ''
       }
     }
   },
   methods: {
     handleSubmit () {
-      this.form.classId = this.id
+      this.form.subjectTime = this.subjectTime
       postCourseUpdate(this.form).then(({ data }) => {
         this.$emit('submit', data.data)
         this.form = {
           id: '',
-          classId: ''
+          classId: '',
+          subjectTime: ''
         }
         this.dialogShow = false
       })
     },
     loadPage () {
-      postCourseList({
-        id: this.id,
-        subjectTime: this.subjectTime
-      }).then(({ data }) => {
+      this.form.id = this.id
+      postCourseList(
+        this.id
+      ).then(({ data }) => {
         this.courseOption = data.data
       })
     },

@@ -1,99 +1,77 @@
 <template>
-  <e-dialog :dialog-show="dialogShow" :title="`${methodName}课程管理`" width="800px" @close="loadPage">
-    <el-form ref="form" :model="form" label-width="80px">
-      <el-row>
-        <el-col :span="24">
-          <el-form-item label="班级名称">
-            <el-input v-model="form.className"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="12">
-          <el-form-item label="年制">
-            <el-select v-model="form.yearSystem" placeholder="请选择">
-              <el-option label="二年" value="二年"></el-option>
-              <el-option label="三年" value="三年"></el-option>
-              <el-option label="四年" value="四年"></el-option>
-              <el-option label="五年" value="五年"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="班主任">
-            <el-input v-model="form.headmaster"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="12">
-          <el-form-item label="所属学院">
-            <el-input v-model="form.title"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="学期">
-            <el-input v-model="form.semester"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="12">
-          <el-form-item label="所属专业">
-            <el-input v-model="form.profession"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="备注">
-            <el-input v-model="form.remarks"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-    </el-form>
+  <e-dialog :dialog-show="dialogShow" title="添加成绩" width="800px" @close="close">
+    <e-table :isLoadTable="isLoadTable" :pagination="pagination" :columnsMap="columnsMap" :pagedTable="pagedTable" @size-change="handleSizeChange" @current-change="handleCurrentChange">
+      <el-table-column prop="operation" label="操作" width="100">
+        <template slot-scope="scope">
+          <operation-wrapper>
+            <el-button size="small" @click="handleAdd(scope.row)">添加成绩</el-button>
+          </operation-wrapper>
+        </template>
+      </el-table-column>
+    </e-table>
+    <GradeDialogForm ref="GradeDialogForm" @load-page="loadPage"></GradeDialogForm>
     <template slot="footer">
-      <el-button type="primary" @click="submitForm('form')">保存</el-button>
-      <el-button @click="loadPage">取消</el-button>
+      <!-- <el-button type="primary" @click="submitForm('form')">保存</el-button> -->
+      <el-button @click="close">取消</el-button>
     </template>
   </e-dialog>
 </template>
 <script>
-import { addClass, getClass } from '@/api/admin/class'
-import { initMemberForm } from '../options'
+import mixins from '@/mixins/mixins'
+import GradeDialogForm from './GradeDialogForm'
+import { getElectiveScoreById } from '@/api/admin/score'
 export default {
+  components: { GradeDialogForm },
+  mixins: [mixins],
   data () {
     return {
+      courseId: '',
+      courseName: '',
       dialogShow: false,
       formRequestFn: () => { },
-      form: initMemberForm(),
-      methodName: ''
+      form: {},
+      columnsMap: [
+        {
+          prop: 'realName',
+          label: '姓名',
+        },
+        {
+          prop: 'courseName',
+          label: '课程',
+        },
+        {
+          prop: 'examGrade',
+          label: '考试成绩',
+        },
+        {
+          prop: 'partGrade',
+          label: '平时成绩',
+        },
+        {
+          prop: 'grade',
+          label: '期评',
+        },
+      ]
     }
   },
-  created () {
-    this.loadPage()
-  },
   methods: {
-    submitForm (formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.formRequestFn(this.form).then(() => {
-            this.$notify({
-              title: '成功',
-              message: `${this.methodName}成功`,
-              type: 'success',
-              duration: 2000,
-            })
-            this.loadPage()
-          })
-        } else {
-          return false
-        }
-      })
+    handleAdd (row) {
+      this.$refs['GradeDialogForm'].form.courseId = this.courseId
+      this.$refs['GradeDialogForm'].form.userId = row.studentId
+      this.$refs['GradeDialogForm'].form.courseName = this.courseName
+      this.$refs['GradeDialogForm'].form.examGrade = row.examGrade
+      this.$refs['GradeDialogForm'].form.partGrade = row.partGrade
+      this.$refs['GradeDialogForm'].form.grade = row.grade
+      this.$refs['GradeDialogForm'].dialogShow = true
     },
-    loadPage () {
+    loadPage (param) {
+      this.loadTable({ courseId: this.courseId, ...param }, getElectiveScoreById)
+    },
+    close () {
       this.form = {}
       this.dialogShow = false
       this.$emit('load-page')
-    },
+    }
   }
 }
 </script>

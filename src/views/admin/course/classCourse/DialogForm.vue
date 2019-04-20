@@ -51,26 +51,26 @@
         <el-col :span="24">
           <el-form-item label="上课时间">
             <el-select v-model="form.subjectTime" placeholder="请选择">
-              <el-option label="星期一-12节" value="0"></el-option>
-              <el-option label="星期一-34节" value="1"></el-option>
-              <el-option label="星期一-56节" value="2"></el-option>
-              <el-option label="星期一-78节" value="3"></el-option>
-              <el-option label="星期二-12节" value="4"></el-option>
-              <el-option label="星期二-34节" value="5"></el-option>
-              <el-option label="星期二-56节" value="6"></el-option>
-              <el-option label="星期二-78节" value="7"></el-option>
-              <el-option label="星期三-12节" value="8"></el-option>
-              <el-option label="星期三-34节" value="9"></el-option>
-              <el-option label="星期三-56节" value="10"></el-option>
-              <el-option label="星期三-78节" value="11"></el-option>
-              <el-option label="星期四-12节" value="12"></el-option>
-              <el-option label="星期四-34节" value="13"></el-option>
-              <el-option label="星期四-56节" value="14"></el-option>
-              <el-option label="星期四-78节" value="15"></el-option>
-              <el-option label="星期五-12节" value="16"></el-option>
-              <el-option label="星期五-34节" value="17"></el-option>
-              <el-option label="星期五-56节" value="18"></el-option>
-              <el-option label="星期五-78节" value="19"></el-option>
+              <el-option label="星期一-12节" :value="0"></el-option>
+              <el-option label="星期一-34节" :value="1"></el-option>
+              <el-option label="星期一-56节" :value="2"></el-option>
+              <el-option label="星期一-78节" :value="3"></el-option>
+              <el-option label="星期二-12节" :value="4"></el-option>
+              <el-option label="星期二-34节" :value="5"></el-option>
+              <el-option label="星期二-56节" :value="6"></el-option>
+              <el-option label="星期二-78节" :value="7"></el-option>
+              <el-option label="星期三-12节" :value="8"></el-option>
+              <el-option label="星期三-34节" :value="9"></el-option>
+              <el-option label="星期三-56节" :value="10"></el-option>
+              <el-option label="星期三-78节" :value="11"></el-option>
+              <el-option label="星期四-12节" :value="12"></el-option>
+              <el-option label="星期四-34节" :value="13"></el-option>
+              <el-option label="星期四-56节" :value="14"></el-option>
+              <el-option label="星期四-78节" :value="15"></el-option>
+              <el-option label="星期五-12节" :value="16"></el-option>
+              <el-option label="星期五-34节" :value="17"></el-option>
+              <el-option label="星期五-56节" :value="18"></el-option>
+              <el-option label="星期五-78节" :value="19"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
