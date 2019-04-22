@@ -2,9 +2,6 @@
   <div class="user">
     <basic-container>
       <operation-container>
-        <template slot="left">
-          <el-button type="danger" size="small" @click="handleAdd()">新增班级</el-button>
-        </template>
         <template slot="right">
           <operation-search @search-page="searchPage">
           </operation-search>
@@ -14,7 +11,7 @@
         <el-table-column prop="operation" label="操作" width="280">
           <template slot-scope="scope">
             <operation-wrapper>
-              <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
+              <el-button size="small" @click="handleEdit(scope.row)">添加学生成绩</el-button>
               <el-button size="small" @click="handleDelete(scope.row)">删除</el-button>
             </operation-wrapper>
           </template>
@@ -27,7 +24,7 @@
 
 <script>
 import mixins from '@/mixins/mixins'
-import { getTableData, addScore, getScore, delScore, putScore } from '@/api/admin/score'
+import { getMajorData, addScore, getScore, delScore, putScore } from '@/api/admin/score'
 import { columnsMap, initMemberForm } from '../options'
 import DialogForm from './DialogForm'
 export default {
@@ -38,9 +35,12 @@ export default {
     }
   },
   components: { DialogForm },
+  created () {
+    this.loadPage()
+  },
   methods: {
     loadPage (param) {
-      this.loadTable(param, getTableData)
+      this.loadTable(param, getMajorData)
     },
     handleSelectionChange (val) {
       this.multipleSelection = val.map(m => m.userId)
@@ -48,20 +48,11 @@ export default {
     handleDelete (row) {
       this._handleGlobalDeleteById(row.id, delScore)
     },
-    handleAdd (row) {
-      console.log(this.$refs)
-      this.$refs['DialogForm'].form = initMemberForm(row)
-      this.$refs['DialogForm'].methodName = '新增'
-      this.$refs['DialogForm'].formRequestFn = addScore
-      this.$refs['DialogForm'].dialogShow = true
-    },
     handleEdit (row) {
-      getScore(row.id).then(({ data }) => {
-        this.$refs['DialogForm'].form = data.data
-        this.$refs['DialogForm'].methodName = '修改'
-        this.$refs['DialogForm'].formRequestFn = putScore
-        this.$refs['DialogForm'].dialogShow = true
-      })
+      this.$refs['DialogForm'].courseId = row.id
+      this.$refs['DialogForm'].courseName = row.courseName
+      this.$refs['DialogForm'].loadPage()
+      this.$refs['DialogForm'].dialogShow = true
     },
   },
 }

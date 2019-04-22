@@ -10,7 +10,7 @@
 <script>
 import { mapState } from "vuex";
 import mixins from '@/mixins/mixins'
-import { getTableData } from '@/api/admin/class'
+import { getClassPage } from '@/api/admin/class'
 import { columnsMap, initMemberForm } from './options'
 export default {
   mixins: [mixins],
@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     loadPage (param = { ...this.searchForm, id: this.userId }) {
-      this.loadTable(param, getTableData)
+      this.loadTable(param, getClassPage)
     },
   },
   created () {

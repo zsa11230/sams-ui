@@ -40,6 +40,10 @@ export default {
           label: '课程',
         },
         {
+          prop: 'courseType',
+          label: '课程类型',
+        },
+        {
           prop: 'examGrade',
           label: '考试成绩',
         },
@@ -62,6 +66,7 @@ export default {
       this.$refs['GradeDialogForm'].form.examGrade = row.examGrade
       this.$refs['GradeDialogForm'].form.partGrade = row.partGrade
       this.$refs['GradeDialogForm'].form.grade = row.grade
+      this.$refs['GradeDialogForm'].form.courseType = "公共/选修课"
       this.$refs['GradeDialogForm'].dialogShow = true
     },
     loadPage (param) {

@@ -14,6 +14,13 @@ export function getElectiveData (params) {
     params: params,
   })
 }
+export function getMajorData (params) {
+  return request({
+    url: '/admin/score/major/page',
+    method: 'get',
+    params: params,
+  })
+}
 
 export function addScore (obj) {
   return request({
@@ -48,6 +55,14 @@ export function putScore (obj) {
 export function getElectiveScoreById (params) {
   return request({
     url: '/admin/score/elective/student',
+    method: 'get',
+    params: params
+  })
+}
+
+export function getMajorScoreById (params) {
+  return request({
+    url: '/admin/score/major/student',
     method: 'get',
     params: params
   })
