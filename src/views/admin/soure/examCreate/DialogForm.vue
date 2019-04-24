@@ -60,6 +60,9 @@ export default {
   },
   methods: {
     handleAdd (row) {
+      this.$refs['GradeDialogForm'].form.id = row.id
+      this.$refs['GradeDialogForm'].form.credits = this.credits
+      this.$refs['GradeDialogForm'].form.courseTeacher = this.courseTeacher
       this.$refs['GradeDialogForm'].form.courseId = this.courseId
       this.$refs['GradeDialogForm'].form.userId = row.studentId
       this.$refs['GradeDialogForm'].form.courseName = this.courseName

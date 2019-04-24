@@ -24,12 +24,15 @@ export default {
     return {
       dialogShow: false,
       form: {
+        courseTeacher: '',
+        credits: '',
         courseId: '',
         courseName: '',
         userId: '',
         examGrade: '',
         partGrade: '',
-        grade: ''
+        grade: '',
+        id: ''
       }
     }
   },

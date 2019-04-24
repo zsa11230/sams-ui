@@ -12,7 +12,6 @@
           <template slot-scope="scope">
             <operation-wrapper>
               <el-button size="small" @click="handleEdit(scope.row)">添加学生成绩</el-button>
-              <el-button size="small" @click="handleDelete(scope.row)">删除</el-button>
             </operation-wrapper>
           </template>
         </el-table-column>
@@ -50,6 +49,8 @@ export default {
     },
     handleEdit (row) {
       this.$refs['DialogForm'].courseId = row.id
+      this.$refs['DialogForm'].credits = row.credits
+      this.$refs['DialogForm'].courseTeacher = row.courseTeacher
       this.$refs['DialogForm'].courseName = row.courseName
       this.$refs['DialogForm'].loadPage()
       this.$refs['DialogForm'].dialogShow = true

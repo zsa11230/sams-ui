@@ -11,8 +11,7 @@
         <el-table-column prop="operation" label="操作" width="280">
           <template slot-scope="scope">
             <operation-wrapper>
-              <el-button size="small" @click="handleEdit(scope.row)">添加学生成绩</el-button>
-              <el-button size="small" @click="handleDelete(scope.row)">删除</el-button>
+              <el-button size="small" @click="handleEdit(scope.row)">添加学生成绩111</el-button>
             </operation-wrapper>
           </template>
         </el-table-column>
@@ -25,7 +24,7 @@
 <script>
 import mixins from '@/mixins/mixins'
 import { getMajorData, addScore, getScore, delScore, putScore } from '@/api/admin/score'
-import { columnsMap, initMemberForm } from '../options'
+import { columnsMap, initMemberForm } from './options'
 import DialogForm from './DialogForm'
 export default {
   mixins: [mixins],
@@ -50,6 +49,8 @@ export default {
     },
     handleEdit (row) {
       this.$refs['DialogForm'].courseId = row.id
+      this.$refs['DialogForm'].credits = row.credits
+      this.$refs['DialogForm'].courseTeacher = row.courseTeacher
       this.$refs['DialogForm'].courseName = row.courseName
       this.$refs['DialogForm'].loadPage()
       this.$refs['DialogForm'].dialogShow = true

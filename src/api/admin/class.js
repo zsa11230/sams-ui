@@ -86,3 +86,25 @@ export function postCourseUpdate (obj) {
     data: obj
   })
 }
+
+export function postElectiveList (id) {
+  return request({
+    url: `/admin/course/getElectiveList/${id}`,
+    method: 'post',
+  })
+}
+
+export function getSchedule () {
+  return request({
+    url: `/admin/selection/get`,
+    method: 'get',
+  })
+}
+
+export function putSelectionUpdate (obj) {
+  return request({
+    url: `/admin/selection/update`,
+    method: 'post',
+    data: obj
+  })
+}
