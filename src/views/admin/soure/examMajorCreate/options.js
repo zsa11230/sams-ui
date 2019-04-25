@@ -2,6 +2,10 @@
 
 const columnsMap = [
   {
+    prop: 'className',
+    label: '所属班级',
+  },
+  {
     prop: 'courseName',
     label: '课程名称',
   },

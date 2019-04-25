@@ -21,7 +21,7 @@
       </div>
       <div class="item item-4">
         <div class="content-container">
-          <div class="item" v-for="(item,i) in courseList" :key="i" @click="handleSelect(i)">{{item || '+'}}</div>
+          <div class="item" v-for="(item,i) in courseList" :key="i" @click="handleSelect(i, item)">{{item.className || '+'}}</div>
         </div>
       </div>
     </div>
@@ -39,13 +39,17 @@ export default {
       classId: null,
       courseList: [],
       selectId: null,
+      type: null,
     }
   },
   created () {
     this.loadPage()
   },
   methods: {
-    handleSelect (i) {
+    handleSelect (i, item) {
+      if (item.isMajor === 0) {
+        return
+      }
       this.selectId = i
       this.$refs['selectCourseDialog'].id = this.classId
       this.$refs['selectCourseDialog'].subjectTime = i
@@ -57,7 +61,7 @@ export default {
     },
     loadPage () {
       getSchedule().then(({ data }) => {
-        this.courseList = data.data.map(m => m.className)
+        this.courseList = data.data
       })
     },
     resetForm () {
@@ -69,7 +73,7 @@ export default {
 <style lang="scss" scoped>
 .container {
   display: grid;
-  grid-template-columns: 100px 1fr;
+  grid-template-columns: 120px 1fr;
   grid-template-rows: 30px 1fr;
   .title-container {
     display: grid;
@@ -87,7 +91,8 @@ export default {
     grid-template-rows: 1fr 1fr 1fr 1fr;
     .item {
       text-align: center;
-      font-size: 20px;
+      font-size: 25px;
+      height: 40px;
       border: 1px solid #666;
     }
   }
@@ -95,8 +100,9 @@ export default {
 
 .item {
   text-align: center;
-  font-size: 20px;
+  font-size: 25px;
   border: 1px solid #fff;
+  height: 40px;
 }
 
 .item-1 {
@@ -109,6 +115,10 @@ export default {
 
 .item-3 {
   background-color: #8eaa8d;
+  height: 170px;
+  .title-item {
+    height: 45px;
+  }
 }
 
 .item-4 {

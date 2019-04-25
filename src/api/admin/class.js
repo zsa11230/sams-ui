@@ -108,3 +108,11 @@ export function putSelectionUpdate (obj) {
     data: obj
   })
 }
+
+export function getClassStudentPage (params) {
+  return request({
+    url: '/admin/classinfo/student/page',
+    method: 'get',
+    params: params,
+  })
+}

@@ -18,7 +18,7 @@
   </e-dialog>
 </template>
 <script>
-import { postStudentScore } from '@/api/admin/score'
+import { putScore } from '@/api/admin/score'
 export default {
   data () {
     return {
@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     submitForm () {
-      postStudentScore(this.form).then(() => {
+      putScore(this.form).then(() => {
         this.close()
       })
     },

@@ -11,7 +11,7 @@
         <el-table-column prop="operation" label="操作" width="280">
           <template slot-scope="scope">
             <operation-wrapper>
-              <el-button size="small" @click="handleEdit(scope.row)">添加学生成绩111</el-button>
+              <el-button size="small" @click="handleEdit(scope.row)">添加学生成绩</el-button>
             </operation-wrapper>
           </template>
         </el-table-column>
